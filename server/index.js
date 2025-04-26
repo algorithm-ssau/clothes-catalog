@@ -1,41 +1,37 @@
-import express, { json } from "express";
+import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from "cors"
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+import clothingRouter from "./routes/clothingRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config();
 const app = express();
-dotenv.config()
 
-const PORT = process.env.PORT || 3001
-const DB_USER = process.env.DB_USER
-const DB_PASSWORD = process.env.DB_PASSWORD
-const DB_NAME = process.env.DB_NAME
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(cors())
-app.use(json())
+// Routes
+app.use("/api/clothing", clothingRouter);
+app.use("/api/auth", authRouter);
 
-app.get('/', (req, res) => {
-  return res.json({message: 'All Fine'})
-})
+// MongoDB connection
+const DB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.0a7sm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
-async function start() {
-  try {
-    await mongoose.connect(
-      `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.0a7sm.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
-    );
-    app
-      .listen(PORT, () => console.log("Start bddd"))
-      .on("error", (err) => {
-        if (err.code === "EADDRINUSE") {
-          console.error("Port 3002 is already in use");
-          // Можно автоматически попробовать другой порт
-          app.listen(3003, () => {
-            console.log("Server started on random available port");
-          });
-        }
-      });
-  } catch (error) {
-    console.log(error);
-  }
-}
-start()
+mongoose
+  .connect(DB_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
+// Server start
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
