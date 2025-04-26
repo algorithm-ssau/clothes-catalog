@@ -1,12 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
+
 
 const api = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "/api", // Будет использовать прокси
+  timeout: 5000,
 });
 
-// Добавляем токен к каждому запросу
+
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

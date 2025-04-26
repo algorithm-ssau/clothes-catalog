@@ -25,6 +25,9 @@ const clothingSlice = createSlice({
       .addCase(fetchClothing.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.items = action.payload;
+      })
+      .addCase(fetchClothing.rejected, (state) => {
+        state.status = "failed";
       });
   },
 });
