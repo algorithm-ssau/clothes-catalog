@@ -1,0 +1,86 @@
+/* Основные стили */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #333;
+  color: white;
+}
+
+.header a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+
+.btn:hover {
+  background: #45a049;
+}
+
+.btn-large {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Главная страница */
+.hero {
+  background: #f4f4f4;
+  padding: 2rem;
+  text-align: center;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Страница категорий */
+.categories-page {
+  display: flex;
+}
+
+.filters {
+  width: 250px;
+  padding: 1rem;
+  background: #f4f4f4;
+}
+
+.products-section {
+  flex: 1;
+  padding: 1rem;
+}
+
+.filter-section {
+  margin-bottom: 1rem;
+}
