@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { CartContext } from "../context/CartContext";
+import StarRating from "./StarRating";
 
 const ProductCard = ({ product }) => {
   const { user } = useContext(AuthContext);
@@ -19,13 +20,24 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/product/${product.id}`} className="product-card">
-      <img src={product.image} alt={product.name} />
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-      <span className="price">{product.price} ₽</span>
-      <button className="btn" onClick={handleAddToCart}>
-        В корзину
-      </button>
+      <div className="product-image">
+        <img src={product.image} alt={product.name} />
+        {product.price > 3000 && <span className="product-badge">Premium</span>}
+      </div>
+
+      <div className="product-info">
+        <h3>{product.name}</h3>
+        <p className="description">{product.description}</p>
+
+        <div className="product-meta">
+          <StarRating rating={product.rating} />
+          <span className="price">{product.price.toLocaleString()} ₽</span>
+        </div>
+
+        <button className="btn btn-add-to-cart" onClick={handleAddToCart}>
+          В корзину
+        </button>
+      </div>
     </Link>
   );
 };
