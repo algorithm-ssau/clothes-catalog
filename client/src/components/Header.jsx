@@ -9,29 +9,38 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Link to="/" className="logo">
-        FashionStore
-      </Link>
-      <nav>
-        <Link to="/">Главная</Link>
-        <Link to="/categories">Категории</Link>
-      </nav>
-      <div className="auth-buttons">
+      {/* Блок авторизации и корзины (верхний правый угол) */}
+      <div className="header-top-right">
         {user ? (
           <>
-            <span>Привет, {user.email}</span>
-            <button className="btn" onClick={logout}>
+            <span className="user-email">Привет, {user.email}</span>
+            <button className="btn btn-logout" onClick={logout}>
               Выйти
             </button>
           </>
         ) : (
-          <button className="btn" onClick={() => setShowLogin(true)}>
+          <button className="btn btn-login" onClick={() => setShowLogin(true)}>
             Вход
           </button>
         )}
-        <button className="btn" onClick={() => setShowCart(true)}>
+        <button className="btn btn-cart" onClick={() => setShowCart(true)}>
           Корзина ({cartItems.length})
         </button>
+      </div>
+
+      {/* Центральный блок с лого и навигацией */}
+      <div className="header-center">
+        <Link to="/" className="logo">
+          FashionStore
+        </Link>
+        <nav className="main-nav">
+          <Link to="/" className="nav-link">
+            Главная
+          </Link>
+          <Link to="/categories" className="nav-link">
+            Каталог
+          </Link>
+        </nav>
       </div>
     </header>
   );
