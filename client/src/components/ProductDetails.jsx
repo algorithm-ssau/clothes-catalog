@@ -2,13 +2,13 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const { addToCart } = useContext(CartContext);
 
-  // В реальном приложении товары должны загружаться из API
   const products = [
     {
       id: 1,
@@ -20,12 +20,22 @@ const ProductDetails = () => {
       sizes: ["XS", "S", "M", "L", "XL"],
       colors: ["Синий", "Черный"],
     },
+    {
+      id: 2,
+      name: "Летнее платье",
+      description: "Хлопковое платье с цветочным принтом",
+      price: 2899,
+      image: "https://via.placeholder.com/600x800",
+      details: "Состав: 100% хлопок. Уход: ручная стирка",
+      sizes: ["S", "M", "L"],
+      colors: ["Белый", "Голубой", "Розовый"],
+    },
     // Добавьте другие товары
   ];
 
   const product = products.find((p) => p.id === parseInt(id));
 
-  if (!product) return <div>Товар не найден</div>;
+  if (!product) return <div className="product-not-found">Товар не найден</div>;
 
   const handleAddToCart = () => {
     if (!user) {
@@ -37,34 +47,61 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="product-details">
-      <div className="product-images">
-        <img src={product.image} alt={product.name} />
-      </div>
-      <div className="product-info">
-        <h1>{product.name}</h1>
-        <p className="price">{product.price} ₽</p>
-        <p className="description">{product.description}</p>
+    <div className="product-details-container">
+      <Link to="/categories" className="back-link">
+        ← Назад к каталогу
+      </Link>
 
-        <div className="details-section">
-          <h3>Подробности</h3>
-          <p>{product.details}</p>
-        </div>
-
-        <div className="sizes-section">
-          <h3>Размеры</h3>
-          <div className="size-buttons">
-            {product.sizes.map((size) => (
-              <button key={size} className="size-btn">
-                {size}
-              </button>
-            ))}
+      <div className="product-details">
+        <div className="product-images">
+          <img src={product.image} alt={product.name} className="main-image" />
+          <div className="thumbnails">
+            {/* Здесь могут быть дополнительные изображения */}
+            <img src={product.image} alt={product.name} className="thumbnail" />
+            <img src={product.image} alt={product.name} className="thumbnail" />
           </div>
         </div>
 
-        <button className="btn btn-add-to-cart" onClick={handleAddToCart}>
-          Добавить в корзину
-        </button>
+        <div className="product-info">
+          <h1>{product.name}</h1>
+          <p className="price">{product.price.toLocaleString()} ₽</p>
+          <p className="description">{product.description}</p>
+
+          <div className="details-section">
+            <h3>Подробности</h3>
+            <p>{product.details}</p>
+          </div>
+
+          {product.colors && product.colors.length > 0 && (
+            <div className="colors-section">
+              <h3>Цвета</h3>
+              <div className="color-options">
+                {product.colors.map((color) => (
+                  <button key={color} className="color-option">
+                    {color}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {product.sizes && product.sizes.length > 0 && (
+            <div className="sizes-section">
+              <h3>Размеры</h3>
+              <div className="size-buttons">
+                {product.sizes.map((size) => (
+                  <button key={size} className="size-btn">
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <button className="btn btn-add-to-cart" onClick={handleAddToCart}>
+            Добавить в корзину
+          </button>
+        </div>
       </div>
     </div>
   );
