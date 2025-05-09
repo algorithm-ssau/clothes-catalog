@@ -1,18 +1,15 @@
 import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import CategoryFilter from "../components/CategoryFilter";
+import LoginModal from "../components/LoginModal";
 
 const Categories = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [cart, setCart] = useState([]);
 
   const allProducts = [
-    // Женская одежда
     { id: 1, name: "Платье", category: "women", price: 2500, image: "..." },
     { id: 2, name: "Блузка", category: "women", price: 1800, image: "..." },
-    // Мужская одежда
     { id: 3, name: "Рубашка", category: "men", price: 2200, image: "..." },
-    // Детская одежда
     {
       id: 4,
       name: "Футболка детская",
@@ -38,24 +35,17 @@ const Categories = () => {
     setFilteredProducts(filtered);
   };
 
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-    alert(`${product.name} добавлен в корзину!`);
-  };
-
   return (
     <main className="categories-page">
+      <LoginModal />
+
       <CategoryFilter categories={categories} onFilter={handleFilter} />
 
       <section className="products-section">
         <div className="products-grid">
           {(filteredProducts.length ? filteredProducts : allProducts).map(
             (product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAddToCart={addToCart}
-              />
+              <ProductCard key={product.id} product={product} />
             )
           )}
         </div>
