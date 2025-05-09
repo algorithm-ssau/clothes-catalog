@@ -5,11 +5,15 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const login = (email, password) => {
-    // Здесь должна быть реальная логика авторизации
+  const login = async (email, password) => {
+    setIsLoading(true);
+    // Имитация запроса к API
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setUser({ email });
     setShowLogin(false);
+    setIsLoading(false);
   };
 
   const logout = () => {
@@ -18,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, showLogin, setShowLogin, login, logout }}
+      value={{ user, showLogin, setShowLogin, login, logout, isLoading }}
     >
       {children}
     </AuthContext.Provider>
