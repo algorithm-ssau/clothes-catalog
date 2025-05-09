@@ -11,7 +11,13 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (productId) => {
-    setCartItems(cartItems.filter((item) => item.id !== productId));
+    // Находим первый попавшийся товар с таким ID и удаляем его
+    const index = cartItems.findIndex((item) => item.id === productId);
+    if (index !== -1) {
+      const newItems = [...cartItems];
+      newItems.splice(index, 1);
+      setCartItems(newItems);
+    }
   };
 
   return (

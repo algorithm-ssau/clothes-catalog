@@ -1,22 +1,25 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
   const { user } = useContext(AuthContext);
+  const [selectedSize, setSelectedSize] = useState(null);
 
   const handleAddToCart = (e) => {
-    e.preventDefault(); // Предотвращаем переход по ссылке
-    e.stopPropagation(); // Останавливаем всплытие события
+    e.preventDefault();
     if (!user) {
       alert("Для добавления товаров в корзину необходимо авторизоваться");
       return;
     }
-    addToCart(product);
-    alert(`${product.name} добавлен в корзину!`);
+    if (!selectedSize) {
+      alert("Пожалуйста, выберите размер");
+      return;
+    }
+    addToCart({ ...product, selectedSize });
+    alert(`${product.name} (размер: ${selectedSize}) добавлен в корзину!`);
   };
 
   return (
@@ -33,6 +36,22 @@ const ProductCard = ({ product }) => {
         <h3>{product.name}</h3>
         <p className="description">{product.description}</p>
         <span className="price">{product.price.toLocaleString()} ₽</span>
+
+        <div className="size-selector">
+          <select
+            value={selectedSize || ""}
+            onChange={(e) => setSelectedSize(e.target.value)}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <option value="">Выберите размер</option>
+            {product.sizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <button className="btn" onClick={handleAddToCart}>
           В корзину
         </button>

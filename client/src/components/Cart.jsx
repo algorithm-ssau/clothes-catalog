@@ -23,11 +23,15 @@ const Cart = () => {
           <>
             <div className="cart-items">
               {cartItems.map((item) => (
-                <div key={item.id} className="cart-item">
+                <div
+                  key={`${item.id}-${item.selectedSize}`}
+                  className="cart-item"
+                >
                   <img src={item.image} alt={item.name} width="50" />
                   <div>
                     <h4>{item.name}</h4>
                     <p>{item.price} ₽</p>
+                    {item.selectedSize && <p>Размер: {item.selectedSize}</p>}
                   </div>
                   <button
                     onClick={() => removeFromCart(item.id)}
