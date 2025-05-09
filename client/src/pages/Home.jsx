@@ -18,6 +18,7 @@ const Home = () => {
       price: 2899,
       image: "/images/dress.jpg",
     },
+<<<<<<< HEAD
     {
       id: 3,
       name: "Рубашка бордовая",
@@ -25,6 +26,8 @@ const Home = () => {
       price: 2399,
       image: "/images/shirt.jpg",
     },
+=======
+>>>>>>> cd2bdf7b9dc3f8403fdcb9ca84ec5a34e6cd577a
     // Добавьте больше товаров
   ];
 
