@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import LoginModal from "../components/LoginModal";
+import HeroBanner from "../components/HeroBanner";
 
 const Home = () => {
   const popularProducts = [
@@ -50,10 +51,7 @@ const Home = () => {
     <main>
       <LoginModal />
 
-      <section className="hero">
-        <h1>Модная одежда на любой вкус</h1>
-        <button className="btn btn-large">Перейти к покупкам</button>
-      </section>
+      <HeroBanner />
 
       <section className="popular-products">
         <h2>Популярные товары</h2>
