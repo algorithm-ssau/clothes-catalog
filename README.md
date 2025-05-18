@@ -29,3 +29,6 @@ Python API
 pip install flask
 pip install mysql
 запустить сервер api командой python api.py
+
+
+Адрес сайта - https://closeclothes.netlify.app/
